@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import GreetingScreen from './screens/Greeting';
+
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Hello World!</Text>
-      </View>
+      <GreetingScreen />
     );
   }
 }
