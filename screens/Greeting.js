@@ -1,76 +1,48 @@
 import React from 'react';
-import { Dimensions, View, Image, StyleSheet, Text } from 'react-native';
-import Dogwalker from '../assets/dogwalker.png';
-import Path from '../assets/Path2.jpg';
+import PropTypes from 'prop-types';
+import Greeting1 from './Greeting1';
+import Greeting2 from './Greeting2';
+import Greeting3 from './Greeting3';
 
-
-const dimensions = Dimensions.get('window');
-const Height = Math.round(dimensions.width * 9 / 16);
-const Width = dimensions.width;
 export default class Greeting extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      screenIndex: 1
+    };
+    this.onPressScreen1 = this.onPressScreen1.bind(this);
+    this.onPressScreen2 = this.onPressScreen2.bind(this);
   }
+
+  onPressScreen1() {
+    this.setState({ screenIndex: 2 });
+  }
+  onPressScreen2() {
+    this.setState({ screenIndex: 3 });
+  }
+
 
   render() {
-    return (
-      <View style={styles.container}>
-        <View style={[styles.triangle, styles.triangleBottomRight]}></View>
-        <Image
-          style={{ height: Height, width: Width }}
-          source={Dogwalker}
-          resizeMode='contain'
-        />
-        <View style={styles.triangle}></View>
-        <View style={styles.wrapperText}>
-          <Text style={styles.title}>Get organized</Text>
-          <Text style={styles.text}>
-            Life gets a lot of easier when you plan for
-            </Text>
-          <Text style={styles.text}>
-            yourself. Especially, financially!
-            </Text>
-          <Text style={styles.text}>
-            We're here to help you with just that!
-          </Text>
-        </View>
-      </View>
+    console.log(this.state.screenIndex);
+    const { screenIndex } = this.state;
+    switch (screenIndex) {
+      case 1:
+        return (
+          <Greeting1 onPress={this.onPressScreen1} />
+        );
+      case 2:
+        return (
+          <Greeting2 onPress={this.onPressScreen2} />
+        );
+      case 3:
+        return (
+          <Greeting3 onPress={this.props.onDone}/>
+        );
+    }
 
-    );
   }
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  triangle: {
-    width: 0,
-    height: 0,
-    backgroundColor: 'transparent',
-    borderStyle: 'solid',
-    borderRightWidth: Width,
-    borderTopWidth: 50,
-    borderRightColor: 'transparent',
-    borderTopColor: '#FEDBBF'
-  },
-  triangleBottomRight: {
-    transform: [
-      { rotate: '180deg' }
-    ]
-  },
-  wrapperText: {
-    padding: 10,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: '400',
-    marginBottom: 10
-  },
-  text: {
-    color: 'rgba(0, 0, 0, 0.4)',
-    fontSize: 16,
-    lineHeight: 40
-  }
-})
+
+Greeting.propTypes = {
+  onDone: PropTypes.func.isRequired
+};
